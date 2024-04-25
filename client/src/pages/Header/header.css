@@ -1,0 +1,42 @@
+.header {
+  background-color: #eff1ee;
+  padding: 10px 20px;
+  color: black;
+  display: flex;
+  justify-content:space-around ;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+.header ul {
+    display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.header ul li {
+    align-content: space-between;
+}
+.header ul li a {
+  color: black;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+.header ul li a:hover {
+  cursor: pointer;
+  color: #9f9e9e;
+  font-weight: 600;
+}
+.signIn{
+   background-color: rgb(110, 110, 234);
+   border: none;
+   color: white;
+   border-radius: 5px;
+   padding: 5px;
+}
+.signIn:hover{
+    cursor: pointer;
+    background-color: rgb(101, 101, 214);
+}
