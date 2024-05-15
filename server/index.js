@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 let users = [];
 
@@ -25,9 +27,22 @@ app.post('/login', (req, res) => {
     if (!user) {
         return res.status(401).json({ message: 'Invalid username or password' });
     }
-
+    res.cookie('status', 'logged', { httpOnly: true });
     res.json({ message: 'Login successful' });
 });
+app.post('/contact', (req, res) => {
+    const { name, email, message } = req.body;
+
+    // Do something with the received data, such as sending an email
+    console.log('Received contact form data:');
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Message:', message);
+
+    // Here you can send a response if needed
+    res.status(200).json({ message: 'Data received successfully' });
+});
+
 
 const PORT = 3333;
 app.listen(PORT, () => {
@@ -36,7 +51,5 @@ app.listen(PORT, () => {
 
 
 /*
--write login api
--write register api
--write api which return isLogged
+-write api to forms
 */

@@ -14,8 +14,6 @@ export default function Login() {
   };
 
 
-
-
   const handleSubmitSignUp = async (event) => {
     event.preventDefault();
 
@@ -41,34 +39,27 @@ export default function Login() {
         body: JSON.stringify(signUpData),
       });
 
-      // Check if the request was successful
       if (response.ok) {
         console.log("User registered successfully");
-        // Reset form fields or do any other necessary actions
       } else {
         console.error("Failed to register user");
-        // Handle error
       }
     } catch (error) {
       console.error("Error:", error);
-      // Handle error
     }
   };
 
   const handleSubmitSignIn = async (event) => {
     event.preventDefault();
 
-    // Get form data
     const formData = new FormData(event.target);
 
-    // Convert form data to JSON
     const signInData = {};
     formData.forEach((value, key) => {
       signInData[key] = value;
     });
 
     try {
-      // Send login data to API
       const response = await fetch("http://localhost:3333/login", {
         method: "POST",
         headers: {
@@ -76,11 +67,9 @@ export default function Login() {
         },
         body: JSON.stringify(signInData),
       });
-
-      // Check if the request was successful
       if (response.ok) {
         console.log("Login successful");
-        // Redirect or do any other necessary actions
+        
       } else {
         console.error("Failed to login");
         // Handle error
