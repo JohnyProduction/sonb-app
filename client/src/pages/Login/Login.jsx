@@ -12,28 +12,114 @@ export default function Login() {
   const handleSignInClick = () => {
     setIsSignUpActive(false);
   };
+
+
+
+
+  const handleSubmitSignUp = async (event) => {
+    event.preventDefault();
+
+    // Get form data
+    const formData = new FormData(event.target);
+
+    // Convert form data to JSON
+    const signUpData = {};
+    formData.forEach((value, key) => {
+      signUpData[key] = value;
+    });
+
+    // Add ReCaptcha value to the signUpData
+    signUpData.recaptchaVerify = recaptchaVerify;
+
+    try {
+      // Send sign-up data to API
+      const response = await fetch("http://localhost:3333/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signUpData),
+      });
+
+      // Check if the request was successful
+      if (response.ok) {
+        console.log("User registered successfully");
+        // Reset form fields or do any other necessary actions
+      } else {
+        console.error("Failed to register user");
+        // Handle error
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error
+    }
+  };
+
+  const handleSubmitSignIn = async (event) => {
+    event.preventDefault();
+
+    // Get form data
+    const formData = new FormData(event.target);
+
+    // Convert form data to JSON
+    const signInData = {};
+    formData.forEach((value, key) => {
+      signInData[key] = value;
+    });
+
+    try {
+      // Send login data to API
+      const response = await fetch("http://localhost:3333/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signInData),
+      });
+
+      // Check if the request was successful
+      if (response.ok) {
+        console.log("Login successful");
+        // Redirect or do any other necessary actions
+      } else {
+        console.error("Failed to login");
+        // Handle error
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error
+    }
+  };
+
+
+
+
+
+
+
+
   return (
     <>
-    {recaptchaVerify ? <div>asdasd</div>: <></>}
+      {recaptchaVerify ? <div>asdasd</div> : <></>}
       <div
         className={`container ${isSignUpActive ? "right-panel-active" : ""}`}
       >
         <div className="form-container sign-up-container">
-          <form action="#">
+          <form onSubmit={handleSubmitSignUp}>
             <h1>Create Account</h1>
-            <input type="text" placeholder="Name" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <ReCaptcha value={recaptchaVerify} setValue={setRecaptchaVerify}/>
-            <button>Sign Up</button>
+            <input type="text" name="name" placeholder="Name"  required/>
+            <input type="email" name="email" placeholder="Email" required/>
+            <input type="password" name="password" placeholder="Password" required />
+            <ReCaptcha value={recaptchaVerify} setValue={setRecaptchaVerify} />
+            <button type="submit">Sign Up</button>
           </form>
         </div>
         <div className="form-container sign-in-container">
-          <form action="#">
+          <form onSubmit={handleSubmitSignIn}>
             <h1>Sign in</h1>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button>Sign In</button>
+            <input type="email" name="email" placeholder="Email" required/>
+            <input type="password" name="password" placeholder="Password" required/>
+            <button type="submit">Sign In</button>
           </form>
         </div>
         <div className="overlay-container">
