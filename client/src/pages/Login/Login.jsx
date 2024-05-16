@@ -70,6 +70,9 @@ export default function Login() {
       if (response.ok) {
         console.log("Login successful");
         
+        document.cookie = "isLogged=true; path=/";
+        window.location.replace('http://localhost:3000/service');
+        
       } else {
         console.error("Failed to login");
         // Handle error

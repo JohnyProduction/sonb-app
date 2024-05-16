@@ -33,23 +33,37 @@ app.post('/login', (req, res) => {
 app.post('/contact', (req, res) => {
     const { name, email, message } = req.body;
 
-    // Do something with the received data, such as sending an email
     console.log('Received contact form data:');
     console.log('Name:', name);
     console.log('Email:', email);
     console.log('Message:', message);
 
-    // Here you can send a response if needed
     res.status(200).json({ message: 'Data received successfully' });
 });
-
+// Oczekiwane odpowiedzi
+const correctAnswers = [
+    "Paryż",
+    "Brazylia",
+    "Wodór",
+    "Fiodor Dostojewski",
+    "Morze Śródziemne"
+  ];
+  
+  app.post('/check-answers', (req, res) => {
+    const submittedAnswers = req.body.answers;
+  
+    const isCorrect = submittedAnswers.every((answer, index) => {
+      return answer === correctAnswers[index];
+    });
+  
+    if (isCorrect) {
+      res.status(200).json({ message: 'Odpowiedzi poprawne' });
+    } else {
+      res.status(401).json({ message: 'Odpowiedzi niepoprawne' });
+    }
+  });
 
 const PORT = 3333;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
-/*
--write api to forms
-*/
