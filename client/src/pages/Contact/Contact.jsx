@@ -18,8 +18,6 @@ export default function Contact() {
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        // Tutaj możesz dodać kod do obsługi wysłania formularza, np. wywołanie API
-        //console.log(formData);
         setFormData({
           name: '',
           email: '',
