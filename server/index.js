@@ -9,27 +9,27 @@ app.use(cors());
 let users = [];
 
 app.post('/register', (req, res) => {
-    const { username, password } = req.body;
+  const { email, name, password } = req.body;
+  console.log(users);
+  if (users.find(user => user.email === email)) {
+      return res.status(400).json({ message: 'Email already exists' });
+  }
 
-    if (users.find(user => user.username === username)) {
-        return res.status(400).json({ message: 'Username already exists' });
-    }
-
-    users.push({ username, password });
-    res.status(201).json({ message: 'User registered successfully' });
+  users.push({ email, username: name, password });
+  res.status(201).json({ message: 'User registered successfully' });
 });
-
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+  const { email, password } = req.body;
 
-    const user = users.find(user => user.username === username && user.password === password);
+  const user = users.find(user => user.email === email && user.password === password);
 
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid username or password' });
-    }
-    res.cookie('status', 'logged', { httpOnly: true });
-    res.json({ message: 'Login successful' });
+  if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+  }
+  res.cookie('status', 'logged', { httpOnly: true });
+  res.json({ message: 'Login successful' });
 });
+
 app.post('/contact', (req, res) => {
     const { name, email, message } = req.body;
 
@@ -63,6 +63,9 @@ const correctAnswers = [
     }
   });
 
+app.get('/users', (req, res) => {
+  res.status(200).json(users);
+});
 const PORT = 3333;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
