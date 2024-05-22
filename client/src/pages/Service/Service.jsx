@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { toastDisplay } from '../../components/toastDisplay/toastDisplay';
 export default function Service () {
   const [answers, setAnswers] = useState(Array(5).fill(''));
   const [formError, setFormError] = useState('');
@@ -30,10 +30,13 @@ export default function Service () {
               setFormError('');
               const data = await response.json();
               console.log(data.message); // Komunikat z serwera
+              toastDisplay("success", data.message);
             } else {
+              toastDisplay("error", "Błąd przy sprawdzaniu odpowiedzi");
               console.error('Błąd przy sprawdzaniu odpowiedzi');
             }
           } catch (error) {
+            toastDisplay("error", error);
             console.error('Błąd sieci:', error);
           }
     }

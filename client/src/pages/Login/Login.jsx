@@ -39,7 +39,7 @@ export default function Login() {
       if (response.ok) {
         console.log("User registered successfully");
         toastDisplay("success", "Registered successfully");
-        recaptchaRef.current.refreshCaptcha();  // Refresh ReCaptcha
+        recaptchaRef.current.refreshCaptcha();
       } else {
         console.error("Failed to register user");
         toastDisplay("error", "Failed to register");
@@ -73,9 +73,11 @@ export default function Login() {
         window.location.replace('http://localhost:3000/service');
       } else {
         console.error("Failed to login");
+        toastDisplay("error", "Failed to login");
       }
     } catch (error) {
       console.error("Error:", error);
+      toastDisplay("error", error);
     }
   };
 
