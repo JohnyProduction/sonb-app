@@ -10,7 +10,6 @@ let users = [];
 
 app.post('/register', (req, res) => {
   const { email, name, password } = req.body;
-  console.log(users);
   if (users.find(user => user.email === email)) {
       return res.status(400).json({ message: 'Email already exists' });
   }
